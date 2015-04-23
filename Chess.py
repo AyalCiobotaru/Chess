@@ -666,6 +666,8 @@ class ChessBoard(Frame):
             text = "queen"
         self.button_location[row, col].config(text=text, image=image, width=140, height=95)
         self.piece_window.destroy()
+        self.king_in_danger()
+        self.clear_board()
     
     # Replace Pawn wtih Rook
     def place_rook(self, row, col, color):
@@ -677,6 +679,8 @@ class ChessBoard(Frame):
             text = "rook"
         self.button_location[row, col].config(text=text, image=image, width=140, height=95)
         self.piece_window.destroy()
+        self.king_in_danger()
+        self.clear_board()
     
     # Replace Pawn with Bishop
     def place_bishop(self, row, col, color):
@@ -688,6 +692,8 @@ class ChessBoard(Frame):
             text = "bishop"
         self.button_location[row, col].config(text=text, image=image, width=140, height=95)
         self.piece_window.destroy()
+        self.king_in_danger()
+        self.clear_board()
 
     # Replace Pawn with Knight
     def place_knight(self, row, col, color):
@@ -699,6 +705,8 @@ class ChessBoard(Frame):
             text = "knight"
         self.button_location[row, col].config(text=text, image=image, width=140, height=95)
         self.piece_window.destroy()
+        self.king_in_danger()
+        self.clear_board()
 
     # Resets everything
     def new_game(self):
