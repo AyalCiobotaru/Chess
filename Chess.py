@@ -381,18 +381,17 @@ class ChessBoard(Frame):
         self.clear_board()
         if color == "DimGray":
             piece = "OrangeRed"
+            self.white_castle(col)
         else:
             piece = "DimGray"
+            self.black_castle(col)
         for x in range(-1, 2):
             for y in range(-1, 2):
                 if self.button_location[(row + x), (col + y)]["text"] == "":
                     self.button_location[(row + x), (col + y)]["bg"] = "Green"
                 elif self.button_location[(row + x), (col + y)]["fg"] == piece:
                     self.button_location[(row + x), (col + y)]["bg"] = "Green"
-        
-        self.white_castle(col)
-        self.black_castle(col)
-
+                    
     def white_castle(self, col):
         # Caslteing option
         # Checks if the king has moved
