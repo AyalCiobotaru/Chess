@@ -512,6 +512,7 @@ class ChessBoard(Frame):
                 if self.piece_color == "OrangeRed":
                     movement.get(self.piece)(row, col, color=self.piece_color)
                 else:
+                    self.clear_board()
                     wrong_turn_window = Toplevel()
                     wrong_turn_window.title("Wrong Turn")
                     wrong_turn_window.lift()
@@ -523,6 +524,7 @@ class ChessBoard(Frame):
                 if self.piece_color == "DimGray":
                     movement.get(self.piece)(row, col, color=self.piece_color)
                 else:
+                    self.clear_board()
                     wrong_turn_window = Toplevel()
                     wrong_turn_window.title("Wrong Turn")
                     wrong_turn_window.lift()
