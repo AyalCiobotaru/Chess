@@ -706,6 +706,7 @@ class ChessBoard(Frame):
             for y in range(1, 9):
                 self.button_location[x, y].config(text="", image="", width=20, height=6)
         self.place_pieces()
+        self.turn = 1
 
     def exit(self, _=None):
         self.quit()
