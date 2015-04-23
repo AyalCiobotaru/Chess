@@ -30,6 +30,8 @@ class ChessBoard(Frame):
         self.image = ()
         self.locations = ()
         self.button_location = {}
+        self.black_king_locations = []
+        self.white_king_locations = []
 
         self.board_setup()
         self.get_grid_info()
@@ -165,8 +167,11 @@ class ChessBoard(Frame):
             y = 2
             z = 2
         # If the pawn reaches the other side, pop up window for new piece
-        if row == x:
-            self.new_piece_gui(row=row, col=col, color=color)
+        if row == 1:
+            self.new_piece_gui(row, col, color)
+        if row == 8:
+            self.new_piece_gui(row, col, color)
+            
         # Makes sure the spot in front of the piece is empty
         if self.button_location[row + x, col]["text"] == "":
             if row == z:
@@ -383,6 +388,107 @@ class ChessBoard(Frame):
                     self.button_location[(row + x), (col + y)]["bg"] = "Green"
                 elif self.button_location[(row + x), (col + y)]["fg"] == piece:
                     self.button_location[(row + x), (col + y)]["bg"] = "Green"
+        
+        self.white_castle(col)
+        self.black_castle(col)
+
+    def white_castle(self, col):
+        # Caslteing option
+        # Checks if the king has moved
+        moved = True
+        castleing_left = False
+        castleing_right = False
+        for x in self.white_king_locations:
+            if x == (8, 5):
+                moved = False
+            else:
+                moved = True
+                break
+
+        # Checks if spots are open to the left or right
+        if moved is False:
+            for x in range(col+1, 8):
+                if self.button_location[(8, x)]["text"] == "":
+                    castleing_right = True
+                else:
+                    castleing_right = False
+                    break
+            for x in range(col-1, 1, -1):
+                if self.button_location[(8, x)]["text"] == "":
+                    castleing_left = True
+                else:
+                    castleing_left = False
+                    break
+
+        # if spots are open and the king hasn't moved checks to see if the Rook is there
+        # castles if Rook is there.
+        if castleing_right:
+            if self.button_location[8, 8]["text"] == "ROOK.":
+                self.button_location[8, 7]["bg"] = "Green"
+        if castleing_left:
+            if self.button_location[8, 1]["text"] == "ROOK":
+                self.button_location[8, 3]["bg"] = "Green"
+
+    def black_castle(self, col):
+        # Caslteing option
+        # Checks if the king has moved
+        moved = True
+        castleing_left = False
+        castleing_right = False
+        for x in self.black_king_locations:
+            if x == (1, 5):
+                moved = False
+            else:
+                moved = True
+                break
+
+        # Checks if spots are open to the left or right
+        if moved is False:
+            for x in range(col+1, 8):
+                if self.button_location[(1, x)]["text"] == "":
+                    castleing_right = True
+                else:
+                    castleing_right = False
+                    break
+            for x in range(col-1, 1, -1):
+                if self.button_location[(1, x)]["text"] == "":
+                    castleing_left = True
+                else:
+                    castleing_left = False
+                    break
+
+        # if spots are open and the king hasn't moved checks to see if the Rook is there
+        # castles if Rook is there.
+        if castleing_right:
+            if self.button_location[1, 8]["text"] == "rook.":
+                self.button_location[1, 7]["bg"] = "Green"
+        if castleing_left:
+            if self.button_location[1, 1]["text"] == "rook":
+                self.button_location[1, 3]["bg"] = "Green"
+
+    # Function to get called to castle
+    def move_pieces_castleing(self, row, col):
+        if self.piece == "KING":
+            if self.original_row == 8 and self.original_col == 5:
+                if row == 8 and col == 7:
+                    self.button_location[8, 6].config(text="ROOK.", image=self.white_pieces[0],
+                                                      width=140, height=95, fg="DimGray")
+                    self.button_location[8, 8].config(text="", image="", height=6, width=20)
+                if row == 8 and col == 3:
+                    self.button_location[8, 4].config(text="ROOK", image=self.white_pieces[0],
+                                                      width=140, height=95, fg="DimGray")
+                    self.button_location[8, 1].config(text="", image="", height=6, width=20)
+
+        if self.piece == "king":
+            if self.original_row == 1 and self.original_col == 5:
+                if row == 1 and col == 7:
+                    self.button_location[1, 6].config(text="rook.", image=self.black_pieces[0],
+                                                      width=140, height=95, fg="OrangeRed")
+                    self.button_location[1, 8].config(text="", image="", height=6, width=20)
+                if row == 1 and col == 3:
+                    self.button_location[1, 4].config(text="rook", image=self.black_pieces[0],
+                                                      width=140, height=95, fg="OrangeRed")
+                    self.button_location[1, 1].config(text="", image="", height=6, width=20)
 
     # Takes in the text of the button clicked and goes through the dictionary to get to the correct movement of that
     # specific piece
@@ -419,6 +525,7 @@ class ChessBoard(Frame):
             self.button_location[row, col]["text"] = self.piece
             self.button_location[row, col]["fg"] = self.piece_color
             self.button_location[row, col].config(image=self.piece_image, width=140, height=95)
+            self.move_pieces_castleing(row, col)
             self.piece = ""
             self.piece_color = ""
             self.button_location[self.original_row, self.original_col]["text"] = ""
@@ -460,6 +567,8 @@ class ChessBoard(Frame):
                 if piece_text == "king":
                     king_row1 = piece_row1
                     king_col1 = piece_col1
+        self.white_king_locations.append((king_row, king_col))
+        self.black_king_locations.append((king_row1, king_col1))
 
         # Runs each piece's movement in their specific location to see if they put the king in Check
         done = False
@@ -580,6 +689,5 @@ class ChessBoard(Frame):
 
     def pass_this(self, row, col, color):
         pass
-
 
 ChessBoard(Tk())
