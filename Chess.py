@@ -33,6 +33,7 @@ class ChessBoard(Frame):
         self.black_king_locations = []
         self.white_king_locations = []
 
+        self.turn = 1
         self.board_setup()
         self.get_grid_info()
         self.place_pieces()
@@ -508,7 +509,28 @@ class ChessBoard(Frame):
             self.original_row = row
             self.original_col = col
             self.piece_image = self.button_location[row, col]["image"]
-            movement.get(self.piece)(row, col, color=self.piece_color)
+            if self.turn % 2 == 0:
+                if self.piece_color == "OrangeRed":
+                    movement.get(self.piece)(row, col, color=self.piece_color)
+                else:
+                    wrong_turn_window = Toplevel()
+                    wrong_turn_window.title("Wrong Turn")
+                    wrong_turn_window.lift()
+
+                    label = Label(wrong_turn_window, text="It's Not Your Turn!")
+                    label.pack()
+
+            if self.turn % 2 != 0:
+                if self.piece_color == "DimGray":
+                    movement.get(self.piece)(row, col, color=self.piece_color)
+                else:
+                    wrong_turn_window = Toplevel()
+                    wrong_turn_window.title("Wrong Turn")
+                    wrong_turn_window.lift()
+
+                    label = Label(wrong_turn_window, text="It's Not Your Turn!")
+                    label.pack()
+                    
         # for clicking where there is no piece
         except TypeError:
             no_piece_window = Toplevel()
@@ -534,6 +556,7 @@ class ChessBoard(Frame):
             self.clear_board()
             self.king_in_danger()
             self.clear_board()
+            self.turn += 1
 
         else:
             self.clear_board()
