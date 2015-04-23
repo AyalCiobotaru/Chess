@@ -522,7 +522,8 @@ class ChessBoard(Frame):
         rook_button.grid(row=1, column=1)
         bishop_button.grid(row=2, column=1)
         knight_button.grid(row=3, column=1)
-
+    
+    # Replace Pawn with Queen
     def place_queen(self, row, col, color):
         if color == "DimGray":
             image = self.white_pieces[3]
@@ -532,7 +533,8 @@ class ChessBoard(Frame):
             text = "queen"
         self.button_location[row, col].config(text=text, image=image, width=140, height=95)
         self.piece_window.destroy()
-
+    
+    # Replace Pawn wtih Rook
     def place_rook(self, row, col, color):
         if color == "DimGray":
             image = self.white_pieces[0]
@@ -542,8 +544,8 @@ class ChessBoard(Frame):
             text = "rook"
         self.button_location[row, col].config(text=text, image=image, width=140, height=95)
         self.piece_window.destroy()
-
-
+    
+    # Replace Pawn with Bishop
     def place_bishop(self, row, col, color):
         if color == "DimGray":
             image = self.white_pieces[2]
@@ -554,6 +556,7 @@ class ChessBoard(Frame):
         self.button_location[row, col].config(text=text, image=image, width=140, height=95)
         self.piece_window.destroy()
 
+    # Replace Pawn with Knight
     def place_knight(self, row, col, color):
         if color == "DimGray":
             image = self.white_pieces[1]
