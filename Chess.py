@@ -31,11 +31,10 @@ class ChessBoard(Frame):
         self.locations = ()
         self.button_location = {}
 
-        # self.board_setup()
-        # self.get_grid_info()
-        # self.place_pieces()
+        self.board_setup()
+        self.get_grid_info()
+        self.place_pieces()
         # self.directions_window()
-        self.new_piece_gui(1, 2, 3)
         self.bind("<Destroy>", self.exit)
 
         self.mainloop()
@@ -66,7 +65,7 @@ class ChessBoard(Frame):
                 Label(self.labelframe, text=c, padx=15).grid(row=row, column=column)
                 row += 1
 
-        # Sets up the black white patter on the board
+        # Sets up the black white pattern on the board
         # Makes the board wait for an event (mouse button press)
         def row_helper():
             for row in range(1, 9):
@@ -490,40 +489,80 @@ class ChessBoard(Frame):
 
     # GUI to pop up when a pawn reaches the other side
     def new_piece_gui(self, row, col, color):
-        piece_window = Toplevel()
-        piece_window.title("Pick Your Piece")
-        queen_label = Label(piece_window, text="Queen")
-        rook_label = Label(piece_window, text="Rook")
-        bishop_label = Label(piece_window, text="Bishop")
-        knight_label = Label(piece_window, text="Knight")
+        if color == "DimGray":
+            queen = self.white_pieces[3]
+            rook = self.white_pieces[0]
+            bishop = self.white_pieces[2]
+            knight = self.white_pieces[1]
+        else:
+            queen = self.black_pieces[3]
+            rook = self.black_pieces[0]
+            bishop = self.black_pieces[2]
+            knight = self.black_pieces[1]
+            
+        self.piece_window = Toplevel()
+        self.piece_window.title("Pick Your Piece")
+        queen_label = Label(self.piece_window, text="Queen")
+        rook_label = Label(self.piece_window, text="Rook")
+        bishop_label = Label(self.piece_window, text="Bishop")
+        knight_label = Label(self.piece_window, text="Knight")
         queen_label.grid(row=0, column=0, pady=10, padx=20)
         rook_label.grid(row=1, column=0, pady=10, padx=20)
         bishop_label.grid(row=2, column=0, pady=10, padx=20)
         knight_label.grid(row=3, column=0, pady=10, padx=20)
-        queen_button = Button(piece_window, command=self.place_queen,
-                              image=self.white_pieces[3], width=140, height=90, bg="black")
-        rook_button = Button(piece_window, command=self.place_rook,
-                             image=self.white_pieces[0], width=140, height=90, bg="black")
-        bishop_button = Button(piece_window, command=self.place_bishop,
-                               image=self.white_pieces[2], width=140, height=90, bg="black")
-        knight_button = Button(piece_window, command=self.place_knight,
-                               image=self.white_pieces[1], width=140, height=90, bg="black")
+        queen_button = Button(self.piece_window, image=queen, width=140, height=90, bg="white")
+        rook_button = Button(self.piece_window, image=rook, width=140, height=90, bg="black")
+        bishop_button = Button(self.piece_window, image=bishop, width=140, height=90, bg="white")
+        knight_button = Button(self.piece_window, image=knight, width=140, height=90, bg="black")
+        queen_button.config(command=lambda e=row, i=row, j=col, k=color: self.place_queen(i, j, k))
+        rook_button.config(command=lambda e=row, i=row, j=col, k=color: self.place_rook(i, j, k))
+        bishop_button.config(command=lambda e=row, i=row, j=col, k=color: self.place_bishop(i, j, k))
+        knight_button.config(command=lambda e=row, i=row, j=col, k=color: self.place_knight(i, j, k))
         queen_button.grid(row=0, column=1)
         rook_button.grid(row=1, column=1)
         bishop_button.grid(row=2, column=1)
         knight_button.grid(row=3, column=1)
 
     def place_queen(self, row, col, color):
-        pass
+        if color == "DimGray":
+            image = self.white_pieces[3]
+            text = "QUEEN"
+        else:
+            image = self.black_pieces[3]
+            text = "queen"
+        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.piece_window.destroy()
 
     def place_rook(self, row, col, color):
-        pass
+        if color == "DimGray":
+            image = self.white_pieces[0]
+            text = "ROOK"
+        else:
+            image = self.black_pieces[0]
+            text = "rook"
+        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.piece_window.destroy()
+
 
     def place_bishop(self, row, col, color):
-        pass
+        if color == "DimGray":
+            image = self.white_pieces[2]
+            text = "BISHOP"
+        else:
+            image = self.black_pieces[2]
+            text = "bishop"
+        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.piece_window.destroy()
 
     def place_knight(self, row, col, color):
-        pass
+        if color == "DimGray":
+            image = self.white_pieces[1]
+            text = "KNIGHT"
+        else:
+            image = self.black_pieces[1]
+            text = "knight"
+        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.piece_window.destroy()
 
     # Resets everything
     def new_game(self):
