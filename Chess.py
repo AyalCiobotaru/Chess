@@ -83,8 +83,7 @@ class ChessBoard(Frame):
                             bg = "Black"
                     b1 = Button(self.labelframe, bg=bg, width=20, height=6, bd=8, relief=RAISED)
                     b1.grid(row=row, column=column, sticky="N")
-                    b1.bind("<Button 1>", lambda e=row, i=row, k=column: self.decide_movement(i, k))
-                    b1.bind("<Button 3>", lambda e=row, i=row, k=column: self.move_piece(i, k))
+                    b1.bind("<Button 1>", lambda e=row, i=row, k=column: self.movement(i, k))
 
         set_up_GUI()
         label_helper(0, 1)
@@ -489,7 +488,14 @@ class ChessBoard(Frame):
                     self.button_location[1, 4].config(text="rook", image=self.black_pieces[0],
                                                       width=140, height=95, fg="OrangeRed")
                     self.button_location[1, 1].config(text="", image="", height=6, width=20)
-
+    
+    
+    def movement(self, row, col):
+        if self.button_location[row, col]["bg"] == "Green":
+            self.move_piece(row, col)
+        else:
+            self.decide_movement(row, col)
+            
     # Takes in the text of the button clicked and goes through the dictionary to get to the correct movement of that
     # specific piece
     def decide_movement(self, row, col):
