@@ -128,18 +128,18 @@ class ChessBoard(Frame):
         x = 0
         for images in self.white_pieces:
             x += 1
-            self.button_location[8, x].config(image=images, width=140, height=95)
+            self.button_location[8, x].config(image=images, width=144, height=95)
         for labels in self.black:
             self.button_location[1, self.black.index(labels) + 1].config(text=labels, fg="OrangeRed")
         x = 0
         for images in self.black_pieces:
             x += 1
-            self.button_location[1, x].config(image=images, width=140, height=95)
+            self.button_location[1, x].config(image=images, width=144, height=95)
         for x in range(1, 9):
             self.button_location[7, x].config(text="PAWN", fg="DimGray",
-                                              image=self.white_pawn, width=140, height=95)
+                                              image=self.white_pawn, width=144, height=95)
             self.button_location[2, x].config(text="pawn", fg="OrangeRed",
-                                              image=self.black_pawn, width=140, height=95)
+                                              image=self.black_pawn, width=144, height=95)
 
     # wrapper for the Rook, Bishop and Knight movement
     @staticmethod
@@ -471,22 +471,22 @@ class ChessBoard(Frame):
             if self.original_row == 8 and self.original_col == 5:
                 if row == 8 and col == 7:
                     self.button_location[8, 6].config(text="ROOK.", image=self.white_pieces[0],
-                                                      width=140, height=95, fg="DimGray")
+                                                      width=144, height=95, fg="DimGray")
                     self.button_location[8, 8].config(text="", image="", height=6, width=20)
                 if row == 8 and col == 3:
                     self.button_location[8, 4].config(text="ROOK", image=self.white_pieces[0],
-                                                      width=140, height=95, fg="DimGray")
+                                                      width=144, height=95, fg="DimGray")
                     self.button_location[8, 1].config(text="", image="", height=6, width=20)
 
         if self.piece == "king":
             if self.original_row == 1 and self.original_col == 5:
                 if row == 1 and col == 7:
                     self.button_location[1, 6].config(text="rook.", image=self.black_pieces[0],
-                                                      width=140, height=95, fg="OrangeRed")
+                                                      width=144, height=95, fg="OrangeRed")
                     self.button_location[1, 8].config(text="", image="", height=6, width=20)
                 if row == 1 and col == 3:
                     self.button_location[1, 4].config(text="rook", image=self.black_pieces[0],
-                                                      width=140, height=95, fg="OrangeRed")
+                                                      width=144, height=95, fg="OrangeRed")
                     self.button_location[1, 1].config(text="", image="", height=6, width=20)
     
     
@@ -553,7 +553,7 @@ class ChessBoard(Frame):
         if self.button_location[row, col]["bg"] == "Green":
             self.button_location[row, col]["text"] = self.piece
             self.button_location[row, col]["fg"] = self.piece_color
-            self.button_location[row, col].config(image=self.piece_image, width=140, height=95)
+            self.button_location[row, col].config(image=self.piece_image, width=144, height=95)
             self.move_pieces_castleing(row, col)
             self.piece = ""
             self.piece_color = ""
@@ -649,10 +649,10 @@ class ChessBoard(Frame):
         rook_label.grid(row=1, column=0, pady=10, padx=20)
         bishop_label.grid(row=2, column=0, pady=10, padx=20)
         knight_label.grid(row=3, column=0, pady=10, padx=20)
-        queen_button = Button(self.piece_window, image=queen, width=140, height=90, bg="white")
-        rook_button = Button(self.piece_window, image=rook, width=140, height=90, bg="black")
-        bishop_button = Button(self.piece_window, image=bishop, width=140, height=90, bg="white")
-        knight_button = Button(self.piece_window, image=knight, width=140, height=90, bg="black")
+        queen_button = Button(self.piece_window, image=queen, width=144, height=90, bg="white")
+        rook_button = Button(self.piece_window, image=rook, width=144, height=90, bg="black")
+        bishop_button = Button(self.piece_window, image=bishop, width=144, height=90, bg="white")
+        knight_button = Button(self.piece_window, image=knight, width=144, height=90, bg="black")
         queen_button.config(command=lambda e=row, i=row, j=col, k=color: self.place_queen(i, j, k))
         rook_button.config(command=lambda e=row, i=row, j=col, k=color: self.place_rook(i, j, k))
         bishop_button.config(command=lambda e=row, i=row, j=col, k=color: self.place_bishop(i, j, k))
@@ -670,7 +670,7 @@ class ChessBoard(Frame):
         else:
             image = self.black_pieces[3]
             text = "queen"
-        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.button_location[row, col].config(text=text, image=image, width=144, height=95)
         self.piece_window.destroy()
         self.king_in_danger()
         self.clear_board()
@@ -683,7 +683,7 @@ class ChessBoard(Frame):
         else:
             image = self.black_pieces[0]
             text = "rook"
-        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.button_location[row, col].config(text=text, image=image, width=144, height=95)
         self.piece_window.destroy()
         self.king_in_danger()
         self.clear_board()
@@ -696,7 +696,7 @@ class ChessBoard(Frame):
         else:
             image = self.black_pieces[2]
             text = "bishop"
-        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.button_location[row, col].config(text=text, image=image, width=144, height=95)
         self.piece_window.destroy()
         self.king_in_danger()
         self.clear_board()
@@ -709,7 +709,7 @@ class ChessBoard(Frame):
         else:
             image = self.black_pieces[1]
             text = "knight"
-        self.button_location[row, col].config(text=text, image=image, width=140, height=95)
+        self.button_location[row, col].config(text=text, image=image, width=144, height=95)
         self.piece_window.destroy()
         self.king_in_danger()
         self.clear_board()
